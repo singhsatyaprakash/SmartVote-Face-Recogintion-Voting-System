@@ -1,3 +1,4 @@
 .env
 node_modules
 BuildInAdmin
+fake_users_20.json

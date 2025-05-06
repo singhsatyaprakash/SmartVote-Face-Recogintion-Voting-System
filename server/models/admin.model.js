@@ -2,7 +2,7 @@ const mongoose=require('mongoose');
 const dotenv=require('dotenv');
 dotenv.config();
 
-const adminModel=new mongoose.Schema({
+const adminSchema=new mongoose.Schema({
     userID:{
         type:Number,
         required:true,
@@ -35,6 +35,6 @@ const adminModel=new mongoose.Schema({
     }
 });
 
-const admin=mongoose.model('Admin',adminModel);
+const admin=mongoose.model('Admin',adminSchema);
 
 module.exports=admin;

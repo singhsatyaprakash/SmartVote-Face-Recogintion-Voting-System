@@ -1,0 +1,16 @@
+const adminModel=require('../models/admin.model');
+const candidateModel=require('../models/candidate.model');
+module.exports.Profile=async(req,res)=>{
+
+    const admin=await adminModel.findOne({userID:req.body.userID});
+    return admin;
+}
+module.exports.addCandidate=async(candidateData)=>{
+    try{
+        const candidate=await candidateModel.create(candidateData);
+        return candidate;
+    }catch(err){
+        console.log(err);
+        throw new Error("Error adding candidate");
+    }
+}
