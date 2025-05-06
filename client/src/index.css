@@ -1,7 +1,1 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
-body, html {
-  margin: 0;
-  padding: 0;
-}
+@import "tailwindcss";

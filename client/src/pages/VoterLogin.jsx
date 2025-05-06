@@ -2,25 +2,23 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import SupervisorAccountIcon from '@mui/icons-material/SupervisorAccount';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 const VoterLogin = () => {
-  const [aadharNumber, setAadharNumber] = useState('');
+  const navigate=useNavigate();
+  const [aadhaarNumber, setAadhaarNumber] = useState('');
   const [dob, setDob] = useState('');
+  const [password, setPassword] = useState('');
 
   const handleLogin = async (e) => {
     e.preventDefault();
-    try {
-      const response = await axios.post('http://localhost:5000/api/auth/login', {
-        aadharNumber,
-        dob,
-      });
-      localStorage.setItem('token', response.data.token);
-      alert('Login successful!');
-      // Redirect or navigate
-    } catch (error) {
-      alert(error?.response?.data?.msg || 'Login failed');
+    const voterData={aadhaarNumber,dob,password};
+    console.log(voterData);
+    let response=await axios.post(`${import.meta.env.VITE_BASE_URL}/voter/login`,voterData);
+    if(response.status===200){
+      navigate('/voter/dashboard');
     }
+    
   };
 
   return (
@@ -33,13 +31,13 @@ const VoterLogin = () => {
         </div>
 
         <form onSubmit={handleLogin} className="space-y-6">
-          {/* Aadhar Number */}
+          {/* Aadhaar Number */}
           <div>
-            <label className="block mb-2 text-sm font-medium text-gray-700 dark:text-gray-300">Aadhar Number</label>
+            <label className="block mb-2 text-sm font-medium text-gray-700 dark:text-gray-300">Aadhaar Number</label>
             <input
               type="text"
-              value={aadharNumber}
-              onChange={(e) => setAadharNumber(e.target.value)}
+              value={aadhaarNumber}
+              onChange={(e) => setAadhaarNumber(e.target.value)}
               required
               className="w-full px-4 py-2 rounded-lg bg-gray-100 dark:bg-gray-700 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
               placeholder="Enter your Aadhar number"
@@ -57,6 +55,18 @@ const VoterLogin = () => {
               className="w-full px-4 py-2 rounded-lg bg-gray-100 dark:bg-gray-700 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
             />
           </div>
+          {/* Password */}
+          <div>
+            <label className="block mb-2 text-sm font-medium text-gray-700 dark:text-gray-300">Password</label>
+            <input
+              type="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              required
+              className="w-full px-4 py-2 rounded-lg bg-gray-100 dark:bg-gray-700 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
+              placeholder="••••••••"
+            />
+          </div>
 
           {/* Login Button */}
           <button
@@ -71,7 +81,7 @@ const VoterLogin = () => {
         <div className="mt-6 text-center">
           <p className="text-sm text-gray-500 dark:text-gray-400">
             Not a Voter?{' '}
-            <Link to="/register" className="font-semibold text-blue-600 hover:text-blue-800">
+            <Link to="/voter/register" className="font-semibold text-blue-600 hover:text-blue-800">
               Register Yourself
             </Link>
           </p>

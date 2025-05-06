@@ -1,30 +1,54 @@
 // src/pages/VoterRegistration.js
-import React, { useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import {VoterDataContext} from '../context/VoterContext';
+
+// Function to calculate age
+const calculateAge = (dob) => {
+  const birthDate = new Date(dob);
+  console.log(birthDate);
+  const today = new Date();
+  let age = today.getFullYear() - birthDate.getFullYear();
+  const m = today.getMonth() - birthDate.getMonth();
+  if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) {
+    age--;
+  }
+  return age;
+};
 const VoterRegistration = () => {
   const navigate = useNavigate();
+  const {voter,setVoter}=useContext(VoterDataContext);
   const [formData, setFormData] = useState({
-    name: '',
-    aadharNumber: '',
+    username: '',
+    aadhaarNumber: '',
     dob: '',
+    password:'',
   });
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
-
+  
   const handleSubmit = async (e) => {
     e.preventDefault();
-    navigate('/register-scan-face');
-    // try {
-    //   const response = await axios.post('http://localhost:5000/api/auth/register', formData);
-    //   alert(response.data.msg);
-    // } catch (error) {
-    //   alert(error?.response?.data?.msg || 'Registration failed');
-    // }
-  };
-
+    const age = calculateAge(formData.dob);
+    const updatedFormData = { ...formData, age }; // Make updated object
+  
+    setVoter(updatedFormData); // set in context
+  
+    // No console.log(voter) here because it's NOT updated yet.
+  
+    // Now navigate to scan face
+    navigate('/voter/register/register-scan-face');
+  };  
+  useEffect(() => {
+    console.log(voter);
+    if (voter.username && voter.aadhaarNumber && voter.dob && voter.age) {
+      navigate('/voter/register/register-scan-face');
+    }
+  }, [voter]);
+  
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-100 dark:bg-gray-900 transition-colors duration-500">
       <div className="bg-white dark:bg-gray-800 shadow-xl rounded-xl p-8 w-full max-w-lg">
@@ -39,9 +63,9 @@ const VoterRegistration = () => {
             <label className="block mb-2 text-sm font-medium text-gray-700 dark:text-gray-300">Full Name</label>
             <input
               type="text"
-              name="name"
+              name="username"
               placeholder="Enter your full name"
-              value={formData.name}
+              value={formData.username}
               onChange={handleChange}
               required
               className="w-full px-4 py-2 rounded-lg bg-gray-100 dark:bg-gray-700 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
@@ -50,12 +74,12 @@ const VoterRegistration = () => {
 
           {/* Aadhar Number */}
           <div>
-            <label className="block mb-2 text-sm font-medium text-gray-700 dark:text-gray-300">Aadhar Number</label>
+            <label className="block mb-2 text-sm font-medium text-gray-700 dark:text-gray-300">Aadhaar Number</label>
             <input
               type="text"
-              name="aadharNumber"
-              placeholder="Enter your Aadhar number"
-              value={formData.aadharNumber}
+              name="aadhaarNumber"
+              placeholder="Enter your Aadhaar number"
+              value={formData.aadhaarNumber}
               onChange={handleChange}
               required
               className="w-full px-4 py-2 rounded-lg bg-gray-100 dark:bg-gray-700 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
@@ -69,6 +93,19 @@ const VoterRegistration = () => {
               type="date"
               name="dob"
               value={formData.dob}
+              onChange={handleChange}
+              required
+              className="w-full px-4 py-2 rounded-lg bg-gray-100 dark:bg-gray-700 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
+            />
+          </div>
+          {/* Password */}
+          <div>
+            <label className="block mb-2 text-sm font-medium text-gray-700 dark:text-gray-300">Password</label>
+            <input
+              type="password"
+              name="password"
+              placeholder="Enter Password"
+              value={formData.password}
               onChange={handleChange}
               required
               className="w-full px-4 py-2 rounded-lg bg-gray-100 dark:bg-gray-700 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
@@ -88,7 +125,7 @@ const VoterRegistration = () => {
         <div className="mt-6 text-center">
           <p className="text-sm text-gray-500 dark:text-gray-400">
             Already have an account?{' '}
-            <a href="/login/voter" className="font-semibold text-blue-600 hover:text-blue-800">
+            <a href="/voter/login" className="font-semibold text-blue-600 hover:text-blue-800">
               Login Here
             </a>
           </p>

@@ -12,7 +12,7 @@ const UserTypeSelection = () => {
     <Navbar></Navbar>
     <div className='User flex flex-col md:flex-row justify-center items-center p-6 md:p-16 w-screen min-h-screen bg-white dark:bg-gray-900 text-gray-800 dark:text-gray-100 transition-colors duration-500'>
       
-      <Link to='/login/admin' className='w-full md:w-1/2 max-w-md m-4'>
+      <Link to='/admin/login' className='w-full md:w-1/2 max-w-md m-4'>
         <div className="border border-gray-300 dark:border-gray-700 rounded-[40px] bg-[#8484e7] text-white shadow-lg hover:shadow-2xl transition-all duration-300 p-6 flex flex-col items-center animate-fade-in">
           <div className="admin-logo mb-4">
             <AdminPanelSettingsIcon style={{ fontSize: 120 }} />
@@ -30,7 +30,7 @@ const UserTypeSelection = () => {
         </div>
       </Link>
 
-      <Link to='/login/voter' className='w-full md:w-1/2 max-w-md m-4'>
+      <Link to='/voter/login' className='w-full md:w-1/2 max-w-md m-4'>
         <div className="border border-gray-300 dark:border-gray-700 rounded-[40px] bg-[#8484e7] text-white shadow-lg hover:shadow-2xl transition-all duration-300 p-6 flex flex-col items-center animate-fade-in">
           <div className="voter-logo mb-4">
             <SupervisorAccountIcon style={{ fontSize: 120 }} />

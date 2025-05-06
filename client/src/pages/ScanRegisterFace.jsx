@@ -1,4 +1,6 @@
 import React, { useState } from 'react';
+import FaceScanner from '../components/FaceScanner';
+import { VoterContext } from '../context/VoterContext';
 
 const ScanRegisterFace = () => {
   const [showModal, setShowModal] = useState(false);
@@ -25,14 +27,13 @@ const ScanRegisterFace = () => {
             <h2 className="text-xl font-semibold text-gray-800 dark:text-white mb-4">Face Scan Page</h2>
             <p className="text-gray-600 dark:text-gray-300 mb-4">Camera access will be requested for scanning.</p>
             
-            {/* Replace this div with your webcam/face detection logic */}
-            <div className="w-full h-64 bg-gray-300 dark:bg-gray-700 rounded-md flex items-center justify-center text-gray-700 dark:text-gray-200">
-              [ Webcam Feed Area ]
-            </div>
+            {/* FaceScanner Component */}
+            
+            <FaceScanner />
 
             <button
               onClick={() => setShowModal(false)}
-              className="mt-6 bg-red-500 text-white px-6 py-2 rounded-lg hover:bg-red-600 transition"
+              className="bg-red-500 text-white px-6 py-2 rounded-lg hover:bg-red-600 transition"
             >
               Close
             </button>
