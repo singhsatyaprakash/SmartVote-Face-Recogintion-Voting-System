@@ -7,6 +7,7 @@ const candidateSevices=require('../services/candidate.services');
 const {body}=require('express-validator');
 const electionModel=require('../models/election.model');
 const electionServices=require('../services/election.services');
+const adminServices=require('../services/admin.services');
 
 
 const verifyAdminData=[
@@ -32,6 +33,7 @@ const verifyCandidateData=[
 ];
 
 router.post('/login',verifyAdminData,AuthenticateAdminProfile,adminController.adminLogin)
+      .get('/profile/:id',adminServices.getProfileById)
       .get('/voterlist',voterServices.voterList)
       .post('/create-election',electionServices.createElection)
       .get('/electionlist',electionServices.getElectionList)

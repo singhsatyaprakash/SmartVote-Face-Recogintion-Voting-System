@@ -46,3 +46,16 @@ module.exports.resetVotes=async(req,res)=>{
         return res.status(500).json({message:err.message});
     }
 }
+module.exports.getCandidate=async(req,res)=>{
+
+  try {
+    const { id } = req.params; // id = Election ObjectId
+
+    const candidates = await candidateModel.find({ electionId: id }).populate('electionId');
+    //console.log(candidates);
+    res.status(200).json(candidates);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: 'Failed to fetch candidates' });
+  }
+};

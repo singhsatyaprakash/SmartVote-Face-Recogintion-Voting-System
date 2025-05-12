@@ -24,7 +24,7 @@ module.exports.adminLogin = async (req, res, next) => {
             //secure: process.env.NODE_ENV === 'production', // Ensures the cookie is sent over HTTPS in production
             sameSite: 'strict', // Prevents CSRF attacks
         });
-        return res.status(200).json({ message: 'Login successfully', token });
+        return res.status(200).json({ message: 'Login successfully', token,admin });
     } catch (error) {
         console.log(error.message);
         return res.status(500).json({ message: error.message });

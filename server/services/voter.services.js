@@ -52,4 +52,18 @@ module.exports.isVoter=async(req,res,next)=>{
         return res.status(500).json({message:"Error checking voter"});
     }
 }
-  
+module.exports.getProfileById=async(req,res)=>{
+    const {id}=req.params;
+    // console.log(id);
+    const voter=await voterModel.findById({_id:id});//try to not send all data to console only neede things
+    // console.log(voter);
+    res.status(200).json({message:"Conformation of voter",voter})
+}
+module.exports.getdescriptor=async(req,res)=>{
+    const {id}=req.params;
+    const descriptor=await voterModel.findById({_id:id},{descriptor:1,_id:0});
+    if(!descriptor){
+        res.status(404).json({message:"Descriptoe of login user not found please login again"});
+    }
+    res.status(200).json({message:"Descriptor found.",descriptor});
+}

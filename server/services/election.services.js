@@ -75,3 +75,15 @@ module.exports.resetVotes = async (req, res) => {
     res.status(500).json({ message: 'Internal server error' });
   }
 };
+
+module.exports.getOngoingElection = async (req, res) => {
+  try {
+    const ongoingElection = await electionModel.find({ status: 'ongoing' });
+    console.log(ongoingElection);
+
+    res.status(200).json(ongoingElection);
+  } catch (error) {
+    console.error('Error fetching ongoing election:', error);
+    res.status(500).json({ error: 'Server error' });
+  }
+};

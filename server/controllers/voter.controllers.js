@@ -3,7 +3,7 @@ const voterServices=require('../services/voter.services');
 const bcrypt=require('bcryptjs');
 const jwt=require('jsonwebtoken');
 module.exports.voterRegister=async(req,res,next)=>{
-    // console.log("Reached here");
+    
     const errors=validationResult(req);
     if(!errors.isEmpty()){
         return res.status(422).json({message:"Data validation error",errors:errors.array()});
@@ -22,7 +22,7 @@ module.exports.voterRegister=async(req,res,next)=>{
     }
 }
 module.exports.voterLogin=async(req,res,next)=>{
-    console.log(req.body);
+    //console.log(req.body);
     const errors=validationResult(req);
     if(!errors.isEmpty()){
         return res.status(422).json({message:"Data validation error",errors:errors.array()});
@@ -41,7 +41,7 @@ module.exports.voterLogin=async(req,res,next)=>{
             httpOnly:true,
             sameSite:'strict',
         });
-        return res.status(200).json({message:"Login successfully",token});
+        return res.status(200).json({message:"Login successfully",token,voterProfile:voter});
     }
     catch(error){
         console.log(error.message);

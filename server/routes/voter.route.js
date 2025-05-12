@@ -1,7 +1,11 @@
 const express = require('express');
 const router = express.Router();
-const { voterRegister,voterLogin } = require('../controllers/voter.controllers');
+const voterController = require('../controllers/voter.controllers');
+const electionServices=require('../services/election.services');
 const { body } = require('express-validator');
+const Candidate = require('../models/candidate.model');
+const candidateServices = require('../services/candidate.services');
+const voterServices=require('../services/voter.services')
 
 const voterRegisterDataValidation = [
     body('username')
@@ -39,7 +43,16 @@ const voterLoginDataValidation = [
 ];
 
 // Use router.post() to define the route
-router.post('/register-end', voterRegisterDataValidation, voterRegister)
-        .post('/login',voterLoginDataValidation,voterLogin)
-
+router.post('/register-end', voterRegisterDataValidation, voterController.voterRegister)
+        .post('/login',voterLoginDataValidation,voterController.voterLogin)
+        .get('/electionlist',electionServices.getElectionList)
+        .get('/getcandidate/:id',candidateServices.getCandidate)
+        .get('/ongoingElection',electionServices.getOngoingElection)
+        .get('/profile/:id',voterServices.getProfileById)
+        .get('/getdescriptor/:id',voterServices.getdescriptor)
+        // .post('/store-vote',(req,res)=>{
+        //     console.log('vote stored mark voter voted and candidate vote increase by one');
+        //     res.status(200);
+        //     return;
+        // })
 module.exports = router;

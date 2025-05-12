@@ -14,3 +14,9 @@ module.exports.addCandidate=async(candidateData)=>{
         throw new Error("Error adding candidate");
     }
 }
+
+module.exports.getProfileById=async(req,res)=>{
+    const {id}=req.params;
+    const admin=await adminModel.findById({_id:id});
+    res.status(200).json({message:"Conformation of admin",admin});
+}
