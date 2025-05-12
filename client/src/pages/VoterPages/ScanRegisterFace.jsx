@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import FaceScanner from '../components/FaceScanner';
-import { VoterContext } from '../context/VoterContext';
+import FaceScanner from '../../components/FaceScanner';
+import { VoterContext } from '../../context/VoterContext';
 
 const ScanRegisterFace = () => {
   const [showModal, setShowModal] = useState(false);
@@ -8,7 +8,7 @@ const ScanRegisterFace = () => {
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-100 dark:bg-gray-900 p-6">
       <div className="bg-white dark:bg-gray-800 p-8 rounded-xl shadow-xl max-w-md w-full text-center">
-        <h1 className="text-2xl font-bold text-gray-800 dark:text-white mb-4">Face Scan Verification</h1>
+        <h1 className="text-2xl font-bold text-gray-800 dark:text-white mb-4">Face Scan Registeration</h1>
         <p className="text-gray-600 dark:text-gray-300 mb-6">
           We will now scan your face to store it securely in our database and verify that you are a real human and not a bot.
         </p>

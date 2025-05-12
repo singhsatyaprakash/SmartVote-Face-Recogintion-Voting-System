@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-const Result = () => {
+const ElectionResult = () => {
   // Sample data (replace with props or API data in real use)
   const candidates = [
     { name: 'Satya Prakash Singh', votes: 230 },
@@ -48,4 +48,4 @@ const Result = () => {
   );
 };
 
-export default Result;
+export default ElectionResult;

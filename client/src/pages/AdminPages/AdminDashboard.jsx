@@ -6,9 +6,10 @@ import EmojiEventsIcon from '@mui/icons-material/EmojiEvents';
 import ReceiptLongIcon from '@mui/icons-material/ReceiptLong';
 import EmojiPeopleIcon from '@mui/icons-material/EmojiPeople';
 import BugReportIcon from '@mui/icons-material/BugReport';
+import PreviewIcon from '@mui/icons-material/Preview';
 
 import { Link } from 'react-router-dom';
-import Navbar from '../components/Navbar';
+import Navbar from '../../components/Navbar';
 
 const AdminDashboard = () => {
   return (
@@ -29,6 +30,21 @@ const AdminDashboard = () => {
             <Link to='/admin/create-election'>
               <button className="bg-lime-500 text-white px-6 py-2 rounded-lg hover:bg-lime-600 transition">
                 Create Election
+              </button>
+            </Link>
+          </div>
+        </div>
+        {/* Show Election*/}
+        <div className="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-lg hover:shadow-2xl transition">
+          <div className="flex flex-col items-center">
+            <PreviewIcon className="text-pink-500 mb-4" style={{ fontSize: 60 }} />
+            <h2 className="text-xl font-semibold text-gray-800 dark:text-white mb-2">Show Election</h2>
+            <p className="text-gray-600 dark:text-gray-300 text-center mb-4">
+              List of connection which will happens next.
+            </p>
+            <Link to='/admin/show-election'>
+              <button className="bg-pink-500 text-white px-6 py-2 rounded-lg hover:bg-pink-600 transition">
+                Show Election
               </button>
             </Link>
           </div>

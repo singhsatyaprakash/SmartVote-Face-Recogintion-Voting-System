@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import Navbar from '../components/Navbar';
+import Navbar from '../../components/Navbar';
 import { X } from 'lucide-react'; // Optional: Small cross icon for remove
 
-export default function CandidateList() {
+export default function AdminCandidateList() {
   const [candidates, setCandidates] = useState([]);
   const [selectedId, setSelectedId] = useState(null);
 
@@ -27,6 +27,7 @@ export default function CandidateList() {
   
     try {
       // await axios.delete(`${import.meta.env.VITE_BASE_URL}/admin/deleteCandidate/${id}`);
+      ///logic of removing the candidate....
       setCandidates(candidates.filter(candidate => candidate._id !== id));
     } catch (error) {
       console.error('Error removing candidate:', error);

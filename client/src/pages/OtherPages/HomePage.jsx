@@ -1,10 +1,10 @@
-// src/pages/HomePage.js
+
 import React from 'react';
 import { Link } from 'react-router-dom';
-import HomeImage from '../assets/HomeImage.jpg';
-import Navbar from '../components/Navbar';
+import HomeImage from '../../assets/HomeImage.jpg';
+import Navbar from '../../components/Navbar';
 import KeyboardArrowRightIcon from '@mui/icons-material/KeyboardArrowRight';
-import Footer from '../components/Footer';
+import Footer from '../../components/Footer';
 
 const HomePage = () => {
   return (
@@ -13,7 +13,7 @@ const HomePage = () => {
     <div className='Box flex flex-col md:flex-row h-full min-h-screen w-screen p-4 md:p-12 box-border overflow-hidden bg-white dark:bg-gray-900 transition-colors duration-500'>
       <div className="photo w-full md:w-2/3 p-4 md:p-12 box-border flex justify-center items-center animate-fade-in">
         <img
-          className='h-auto max-h-[400px] md:max-h-full w-full rounded-md object-cover shadow-lg transition-all duration-500 hover:scale-101'
+          className='h-auto max-h-[400px] md:max-h-full w-full mt-12 rounded-md object-cover shadow-lg transition-all duration-500 hover:scale-101'
           src={HomeImage}
           alt="Home"
         />

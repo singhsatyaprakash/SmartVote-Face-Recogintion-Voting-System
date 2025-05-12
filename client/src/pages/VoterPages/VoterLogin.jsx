@@ -1,24 +1,47 @@
 // src/pages/VoterLogin.js
-import React, { useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import axios from 'axios';
 import SupervisorAccountIcon from '@mui/icons-material/SupervisorAccount';
 import { Link, useNavigate } from 'react-router-dom';
+import { VoterDataContext } from '../../context/VoterContext';
 
 const VoterLogin = () => {
-  const navigate=useNavigate();
+  const { voter, setVoter } = useContext(VoterDataContext);
+  const navigate = useNavigate();
   const [aadhaarNumber, setAadhaarNumber] = useState('');
   const [dob, setDob] = useState('');
   const [password, setPassword] = useState('');
 
   const handleLogin = async (e) => {
     e.preventDefault();
-    const voterData={aadhaarNumber,dob,password};
+    const voterData = { aadhaarNumber, dob, password };
     console.log(voterData);
-    let response=await axios.post(`${import.meta.env.VITE_BASE_URL}/voter/login`,voterData);
-    if(response.status===200){
-      navigate('/voter/dashboard');
+
+
+
+    try {
+        let response = await axios.post(`${import.meta.env.VITE_BASE_URL}/voter/login`, voterData);
+        //console.log(response);
+
+        if (response.status === 200) {
+            //console.log('User login successful, fetching profile...');
+            const token = response.data.token;
+            localStorage.setItem('token', token);
+
+            // Set voter data in context
+            const voterProfile = response.data.voterProfile;
+            //console.log('Voter Profile:', voterProfile);
+            setVoter(voterProfile);
+            // console.log(JSON.stringify(voterProfile))
+            localStorage.setItem('voterId', voterProfile._id);
+
+            // Navigate to voter dashboard
+            navigate('/voter/dashboard');
+        }
+    } catch (error) {
+        console.error('Login failed:', error);
+        alert('Login failed. Please check your credentials and try again.');
     }
-    
   };
 
   return (

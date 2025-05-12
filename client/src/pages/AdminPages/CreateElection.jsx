@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import HowToVoteIcon from '@mui/icons-material/HowToVote';
 import BallotIcon from '@mui/icons-material/Ballot';
-import Navbar from '../components/Navbar';
+import Navbar from '../../components/Navbar';
 import axios from 'axios';
 
 const CreateElection = () => {

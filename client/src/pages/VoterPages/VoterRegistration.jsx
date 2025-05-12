@@ -2,7 +2,7 @@
 import React, { useContext, useEffect, useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-import {VoterDataContext} from '../context/VoterContext';
+import {VoterDataContext} from '../../context/VoterContext';
 
 // Function to calculate age
 const calculateAge = (dob) => {

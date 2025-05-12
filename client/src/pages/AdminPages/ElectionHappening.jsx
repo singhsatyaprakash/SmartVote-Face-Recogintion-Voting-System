@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import Navbar from '../components/Navbar';
+import Navbar from '../../components/Navbar';
 import { useParams } from 'react-router-dom';
 
 const ElectionHappening = () => {
@@ -67,7 +67,7 @@ const ElectionHappening = () => {
   if (loading)
     return (
       <>
-        <Navbar />
+        <Navbar/>
         <div className="text-xl pt-24 text-center text-red-700">Loading candidates...</div>
       </>
     );

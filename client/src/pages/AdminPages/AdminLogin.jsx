@@ -19,6 +19,7 @@ const AdminLogin = () => {
       if(response.status===200){
         const token=response.data.token;
         localStorage.setItem('token',token);
+        localStorage.setItem('adminId',response.data.admin._id);
         navigate('/admin/dashboard');
       }
       else{
