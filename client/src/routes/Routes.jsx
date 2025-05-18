@@ -41,7 +41,6 @@ const AppRoutes = () => (
   <Router>
     <Routes>
       <Route path="/" element={<HomePage />} />
-      <Route path="/voter" element={<VoterPage />} />
       <Route path='/result' element={<ElectionResult/>}/>
       <Route path='/about' element={<About/>}/>
       <Route path='/contact' element={<Contact/>}/>
