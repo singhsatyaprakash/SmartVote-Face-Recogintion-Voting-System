@@ -55,7 +55,7 @@ The backend handles authentication, data storage, face descriptor management, vo
 
 For detailed backend workflow, API endpoints, and setup, **see the backend README**:
 
-👉 [SmartVote Backend README](server/README.md)
+👉 [SmartVote Backend README](server/README.MD)
 
 ---
 
