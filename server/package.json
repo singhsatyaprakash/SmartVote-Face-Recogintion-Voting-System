@@ -23,6 +23,7 @@
     "jsonwebtoken": "^9.0.2",
     "mongoose": "^8.14.0",
     "morgan": "^1.10.0",
+    "node-cron": "^4.0.5",
     "path": "^0.12.7"
   },
   "keywords": [],

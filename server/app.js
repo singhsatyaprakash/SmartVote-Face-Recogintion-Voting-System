@@ -14,6 +14,8 @@ connectDB();
 const adminRouter=require('./routes/admin.route');
 const voterRouter=require('./routes/voter.route');
 
+const electionStatusScheduler=require('./Script/electionStatusScheduler');
+
 app.set('view engine', 'ejs');
 // Set custom views folder
 app.set('views', path.join(__dirname, '../client/src/pages'));

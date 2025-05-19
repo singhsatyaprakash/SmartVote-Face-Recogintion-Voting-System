@@ -6,7 +6,6 @@ import HomePage from '../pages/OtherPages/HomePage'
 import UserTypeSelection from '../pages/OtherPages/UserTypeSelection';
 import AdminLogin from '../pages/AdminPages/AdminLogin';
 import ScanRegisterFace from '../pages/VoterPages/ScanRegisterFace';
-import VoterPage from '../pages/VoterPages/VoterPage';
 import VoterLogin from '../pages/VoterPages/VoterLogin';
 import VoterRegistration from '../pages/VoterPages/VoterRegistration';
 import AddCandidate from '../pages/AdminPages/AddCandidate';
@@ -36,6 +35,7 @@ import ScanVerificationFace from '../pages/VoterPages/ScanVerificationFace';
 import NowVote from '../pages/VoterPages/NowVote';
 import PageNotFound from '../pages/OtherPages/PageNotFound';
 import VoterVerified from '../ProtectWrapper/VoterVerified';
+import Profile from '../pages/OtherPages/Profile';
 
 const AppRoutes = () => (
   <Router>
@@ -181,6 +181,7 @@ const AppRoutes = () => (
         </VoterProtectWrapper>
       }
       />
+      <Route path='/profile' element={<Profile/>}/>
       <Route path='*' element={<PageNotFound/>}/>
     </Routes>
   </Router>

@@ -31,7 +31,7 @@ module.exports.Profile=async(req,res)=>{
 module.exports.voterList = async (req, res, next) => {
     try {
       const voters = await voterModel.find({}, {username: 1, age: 1,_id:0}).sort({username:1}); 
-      console.log(voters);
+      //console.log(voters);
       res.status(200).json({message:'Voter list sent suceesfully',voters}); // Send the list directly
     } catch (err) {
       console.error(err);

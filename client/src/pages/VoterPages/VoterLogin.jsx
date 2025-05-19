@@ -15,7 +15,7 @@ const VoterLogin = () => {
   const handleLogin = async (e) => {
     e.preventDefault();
     const voterData = { aadhaarNumber, dob, password };
-    console.log(voterData);
+    //console.log(voterData);
 
 
 
