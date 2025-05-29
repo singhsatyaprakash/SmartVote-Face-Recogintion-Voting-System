@@ -1,7 +1,7 @@
 const adminModel=require('../models/admin.model');
 const candidateModel=require('../models/candidate.model');
 module.exports.Profile=async(req,res)=>{
-
+    console.log("i am okay baby");
     const admin=await adminModel.findOne({userID:req.body.userID});
     return admin;
 }
@@ -18,5 +18,5 @@ module.exports.addCandidate=async(candidateData)=>{
 module.exports.getProfileById=async(req,res)=>{
     const {id}=req.params;
     const admin=await adminModel.findById({_id:id});
-    res.status(200).json({message:"Conformation of admin",admin});
+    res.status(200).json({message:"Confirmation of admin",admin});
 }

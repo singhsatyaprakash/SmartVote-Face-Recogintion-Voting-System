@@ -30,7 +30,7 @@ const ElectionHappening = () => {
     try {
       const confirmReset = window.confirm('Do you want to reset vote count?');
       if (!confirmReset) return;
-
+      // console.log(electionId);
       const response = await axios.post(`${import.meta.env.VITE_BASE_URL}/admin/reset-votes`, { electionId });
       if (response.status === 200) {
         alert('Votes have been reset successfully.');

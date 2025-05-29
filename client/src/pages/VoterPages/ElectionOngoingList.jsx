@@ -21,11 +21,24 @@ const ElectionOngoingList = () => {
     fetchOngoingElections();
   }, []);
 
-  const handleVoteClick = (electionId) => {
-    //console.log('ready to vote now scan for election id:');
-   // console.log(electionId);
-    navigate(`/voter/voting-face-verification/${electionId}`);
-    // navigate(`/voter/show-candidate/${electionId}`);
+  const handleVoteClick = async(electionId) => {
+    //console.log(electionId);//objectId
+    //check voter is not give vote for this election
+    const voterId= localStorage.getItem('voterId');
+    if(!voterId){
+      navigate('/voter/login');
+    }
+    let response=await axios.post(`${import.meta.env.VITE_BASE_URL}/voter/isAlreadyVoted`,{
+      electionId:electionId,
+      voterId:voterId
+    });
+    //console.log(response);
+    if(!response.data.isAlreadyVoted){
+      navigate(`/voter/voting-face-verification/${electionId}`);
+    }
+    else{
+      alert("You are already voted for this election");
+    }
   };
 
   return (

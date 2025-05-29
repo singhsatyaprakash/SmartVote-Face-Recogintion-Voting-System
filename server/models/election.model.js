@@ -17,7 +17,7 @@ const electionSchema = new mongoose.Schema({
     type: Date,
   },
   //we can add more fields like location, election type, etc.
-  // but for now we are keeping it simple
+  // but for now we are keeping it simple taking spefic location
   status: {
     type: String,
     enum: ['upcoming', 'ongoing', 'completed'],

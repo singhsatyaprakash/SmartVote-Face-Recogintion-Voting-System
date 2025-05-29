@@ -14,7 +14,6 @@ import About from '../pages/OtherPages/About';
 import Contact from '../pages/OtherPages/Contact';
 import VotersList from '../pages/VoterPages/VoterList';
 import AdminDashboard from '../pages/AdminPages/AdminDashboard';
-import AdminCandidateList from '../pages/OtherPages/AdminCandidateList';
 import ManageComplain from '../pages/AdminPages/ManageComplain';
 import VoterDashBoard from '../pages/VoterPages/VoterDashBoard';
 import CreateElection from '../pages/AdminPages/CreateElection';
@@ -30,12 +29,13 @@ import ShowCandidate from '../pages/VoterPages/ShowCandidate';
 import ElectionOngoingList from '../pages/VoterPages/ElectionOngoingList';
 import ShowElection from '../pages/AdminPages/ShowElection';
 import VoterComplain from '../pages/VoterPages/VoterComplain';
-import VoterVerification from '../components/VoterVerification';
+// import VoterVerification from '../components/VoterVerification';
 import ScanVerificationFace from '../pages/VoterPages/ScanVerificationFace';
 import NowVote from '../pages/VoterPages/NowVote';
 import PageNotFound from '../pages/OtherPages/PageNotFound';
 import VoterVerified from '../ProtectWrapper/VoterVerified';
 import Profile from '../pages/OtherPages/Profile';
+import AdminCandidateList from '../pages/AdminPages/AdminCandidateList';
 
 const AppRoutes = () => (
   <Router>
@@ -113,6 +113,8 @@ const AppRoutes = () => (
         </AdminProtectWrapper>
         }
       />
+
+
 
       {/* voter */}
       <Route path="/voter/login" element={<VoterLogin/>} />

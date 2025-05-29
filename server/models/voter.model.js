@@ -34,14 +34,26 @@ const voterSchema = new mongoose.Schema({
     of: Number, // Defines that the values in the map will be numbers
     required: true,
   },
-  hasVoted: {
-    type: Boolean,
-    default: false
-  },
-  votedCandidate: {
-    type: String,
-    default: null
-  }
+  votes: [
+    {
+      //to block voter from that election when it try to revote..
+      electionId: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Election',
+        required: true
+      },
+      //list of candidate whom he voted...data collection if later need to use
+      candidateId: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Candidate',
+        required: true
+      },
+      votedAt: {
+        type: Date,
+        default: Date.now
+      }
+    }
+  ],
 });
 
 const voter = mongoose.model('Voter', voterSchema);

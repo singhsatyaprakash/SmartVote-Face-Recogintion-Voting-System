@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import axios from 'axios';
+import PanToolAltIcon from '@mui/icons-material/PanToolAlt';
 
 const NowVote = () => {
   const { id } = useParams();
@@ -8,11 +9,13 @@ const NowVote = () => {
   const [selectedCandidate, setSelectedCandidate] = useState(null);
   const [showModal, setShowModal] = useState(false);
   const [voted, setVoted] = useState(false);
-
+  const navigate=useNavigate();
   useEffect(() => {
     const fetchCandidates = async () => {
       try {
+        //get candidate of that particular election...
         const response = await axios.get(`${import.meta.env.VITE_BASE_URL}/voter/getcandidate/${id}`);
+       // console.log(response);
         setCandidates(response.data);
       } catch (error) {
         console.error('Error fetching candidates:', error);
@@ -29,15 +32,21 @@ const NowVote = () => {
 
   const confirmVote = async () => {
     try {
-      let response=await axios.post(`${import.meta.env.VITE_BASE_URL}/check`, {
+      let response=await axios.post(`${import.meta.env.VITE_BASE_URL}/voter/store-vote`, {
         voterId: localStorage.getItem('voterId'),
         candidateId: selectedCandidate._id,
+        electionId:id,
       });
+      console.log(response);
       if(response.status===200){
         setShowModal(false);
         setVoted(true);
+        //redirect to give voter dashboard
+        navigate('/voter/dashboard');
       }
     } catch (error) {
+      alert("Voter had been already voted.You are not allowed to vote for election.");
+      navigate('/voter/dashboard');
       console.error('Error voting:', error);
     }
   };
@@ -68,7 +77,7 @@ const NowVote = () => {
                 className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700"
                 onClick={() => handleVoteClick(candidate)}
               >
-                Vote
+                Vote Here<PanToolAltIcon></PanToolAltIcon>
               </button>
             </div>
           ))}

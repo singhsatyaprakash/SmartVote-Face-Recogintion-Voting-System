@@ -67,7 +67,7 @@ module.exports.resetVotes = async (req, res) => {
       return res.status(404).json({ message: 'Election not found' });
     }
     // Reset votes for all candidates in this election
-    await candidateModel.updateMany({_id:electionId }, { $set: { votes: 0 } });
+    await candidateModel.updateMany({electionId:electionId }, { $set: { votes: 0 } });
 
     res.status(200).json({ message: 'Votes reset successfully' });
   } catch (err) {

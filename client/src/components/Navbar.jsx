@@ -1,19 +1,38 @@
 // src/components/Navbar.js
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import MenuIcon from '@mui/icons-material/Menu';
 import CloseIcon from '@mui/icons-material/Close';
-import Avatar from '@mui/material/Avatar';
+// import Avatar from '@mui/material/Avatar';
+import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [userId, setUserId] = useState(null);
+  const [showProfilePopup, setShowProfilePopup] = useState(false);
+  const navigate = useNavigate();
 
   // On mount, check if user is signed in
   useEffect(() => {
     const id = localStorage.getItem('adminId') || localStorage.getItem('voterId');
     setUserId(id);
   }, []);
+
+  const handleLogout = () => {
+    localStorage.clear();
+    setUserId(null);
+    setShowProfilePopup(false);
+    navigate('/');
+  };
+
+  const handleProfile = () => {
+    setShowProfilePopup(false);
+    navigate(`/profile`);
+  };
+
+  const toggleProfilePopup = () => {
+    setShowProfilePopup((prev) => !prev);
+  };
 
   const navLinks = [
     { name: 'Home', path: '/' },
@@ -44,15 +63,37 @@ const Navbar = () => {
 
         {/* Profile icon shown only when signed in */}
         {userId && (
-          <Link to="/profile" className="ml-4">
-            <Avatar
-              alt="Profile"
-              sx={{ width: 32, height: 32, bgcolor: 'white', color: 'blue' }}
+          <div className="relative ml-4">
+            <div
+              onClick={toggleProfilePopup}
+              className="cursor-pointer text-white flex items-center space-x-1"
             >
-              {/* You could put initials here or a <AccountCircleIcon /> */}
-              U
-            </Avatar>
-          </Link>
+              <AccountCircleIcon sx={{ color: 'red', fontSize: 36 }} />
+            </div>
+            {showProfilePopup && (
+              <div className="absolute right-0 mt-2 w-44 bg-white rounded-lg shadow-lg py-2 z-50">
+                <button
+                  className="absolute top-2 right-2 text-gray-500 hover:text-red-500 focus:outline-none"
+                  onClick={toggleProfilePopup}
+                  aria-label="Close profile popup"
+                >
+                  <CloseIcon fontSize="small" />
+                </button>
+                <button
+                  className="px-4 py-2 text-blue-600 hover:bg-blue-100 w-full text-left"
+                  onClick={handleProfile}
+                >
+                  Profile
+                </button>
+                <button
+                  className="px-4 py-2 text-red-600 hover:bg-red-100 w-full text-left"
+                  onClick={handleLogout}
+                >
+                  Logout
+                </button>
+              </div>
+            )}
+          </div>
         )}
       </div>
 
@@ -77,21 +118,40 @@ const Navbar = () => {
             </Link>
           ))}
 
-          {/* Mobile profile link */}
+          {/* Mobile profile link with popup */}
           {userId && (
-            <Link
-              to="/profile"
-              onClick={() => setIsOpen(false)}
-              className="flex items-center space-x-2 text-xl hover:text-gray-200 transition-colors"
-            >
-              <Avatar
-                alt="Profile"
-                sx={{ width: 28, height: 28, bgcolor: 'white', color: 'blue' }}
+            <div className="relative">
+              <button
+                className="flex items-center space-x-2 text-xl hover:text-gray-200 transition-colors focus:outline-none"
+                onClick={toggleProfilePopup}
               >
-                U
-              </Avatar>
-              <span>Profile</span>
-            </Link>
+                <AccountCircleIcon sx={{ color: 'red', fontSize: 36 }} />
+                <span>Profile</span>
+              </button>
+              {showProfilePopup && (
+                <div className="absolute right-0 mt-2 w-44 bg-white rounded-lg shadow-lg py-2 z-50">
+                  <button
+                    className="absolute top-2 right-2 text-gray-500 hover:text-red-500 focus:outline-none"
+                    onClick={toggleProfilePopup}
+                    aria-label="Close profile popup"
+                  >
+                    <CloseIcon fontSize="small" />
+                  </button>
+                  <button
+                    className="px-4 py-2 text-blue-600 hover:bg-blue-100 w-full text-left"
+                    onClick={handleProfile}
+                  >
+                    Profile
+                  </button>
+                  <button
+                    className="px-4 py-2 text-red-600 hover:bg-red-100 w-full text-left"
+                    onClick={handleLogout}
+                  >
+                    Logout
+                  </button>
+                </div>
+              )}
+            </div>
           )}
         </div>
       )}

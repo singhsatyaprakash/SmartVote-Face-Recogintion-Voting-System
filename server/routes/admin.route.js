@@ -41,6 +41,8 @@ router.post('/login',verifyAdminData,AuthenticateAdminProfile,adminController.ad
       .get('/getCandidate/:electionId',electionServices.getCandidate)
       .post('/reset-votes', electionServices.resetVotes)
       .post('/start-election',adminController.startElection)
+      .delete('/electionlist/:id',adminController.deleteElection)
+      .patch('/electionlist/:id/stop',adminController.stopElection)
 
 
 module.exports=router;

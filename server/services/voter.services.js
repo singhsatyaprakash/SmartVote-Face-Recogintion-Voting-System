@@ -52,12 +52,21 @@ module.exports.isVoter=async(req,res,next)=>{
         return res.status(500).json({message:"Error checking voter"});
     }
 }
+module.exports.isVoterById=async(req,res,next)=>{
+    const {voterId}=req.body;
+    console.log(voterId);
+    const voter= await voterModel.findById({_id:voterId});
+    if(!voter){
+        res.status(404).json({message:"Voter Authentication failed.Please try after sometimes."});
+    }
+    next();
+}
 module.exports.getProfileById=async(req,res)=>{
     const {id}=req.params;
     // console.log(id);
     const voter=await voterModel.findById({_id:id});//try to not send all data to console only neede things
     // console.log(voter);
-    res.status(200).json({message:"Conformation of voter",voter})
+    res.status(200).json({message:"Confirmation of voter",voter})
 }
 module.exports.getdescriptor=async(req,res)=>{
     const {id}=req.params;

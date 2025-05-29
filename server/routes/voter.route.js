@@ -42,7 +42,6 @@ const voterLoginDataValidation = [
         .isLength({ min: 6 }).withMessage('Password must be at least 6 characters long')
 ];
 
-// Use router.post() to define the route
 router.post('/register-end', voterRegisterDataValidation, voterController.voterRegister)
         .post('/login',voterLoginDataValidation,voterController.voterLogin)
         .get('/electionlist',electionServices.getElectionList)
@@ -50,9 +49,6 @@ router.post('/register-end', voterRegisterDataValidation, voterController.voterR
         .get('/ongoingElection',electionServices.getOngoingElection)
         .get('/profile/:id',voterServices.getProfileById)
         .get('/getdescriptor/:id',voterServices.getdescriptor)
-        // .post('/store-vote',(req,res)=>{
-        //     console.log('vote stored mark voter voted and candidate vote increase by one');
-        //     res.status(200);
-        //     return;
-        // })
+        .post('/store-vote',voterServices.isVoterById,voterController.storeVote)
+        .post('/isAlreadyVoted',voterController.isAlreadyVoted)
 module.exports = router;
