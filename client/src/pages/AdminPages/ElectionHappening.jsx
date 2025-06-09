@@ -48,6 +48,11 @@ const ElectionHappening = () => {
     if (candidates.length === 0) return;
 
     try {
+      // Unblock voters before starting the election
+      await axios.post(`${import.meta.env.VITE_BASE_URL}/admin/unblock-voters`, { electionId });
+      //deleting all results related to this election we will store safe data base later imporovements in project...
+      await axios.delete(`${import.meta.env.VITE_BASE_URL}/admin/delete-results/${electionId}`);
+      
       const response = await axios.post(`${import.meta.env.VITE_BASE_URL}/admin/start-election`, { electionId });
       if (response.status === 200) {
         alert("Election has been started! Voters can now vote.");

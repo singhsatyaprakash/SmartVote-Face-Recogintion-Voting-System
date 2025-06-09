@@ -1,9 +1,8 @@
 // src/components/Navbar.js
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import MenuIcon from '@mui/icons-material/Menu';
 import CloseIcon from '@mui/icons-material/Close';
-// import Avatar from '@mui/material/Avatar';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 
 const Navbar = () => {
@@ -12,7 +11,6 @@ const Navbar = () => {
   const [showProfilePopup, setShowProfilePopup] = useState(false);
   const navigate = useNavigate();
 
-  // On mount, check if user is signed in
   useEffect(() => {
     const id = localStorage.getItem('adminId') || localStorage.getItem('voterId');
     setUserId(id);
@@ -31,16 +29,22 @@ const Navbar = () => {
   };
 
   const toggleProfilePopup = () => {
-    setShowProfilePopup((prev) => !prev);
+    setShowProfilePopup(prev => !prev);
   };
 
-  const navLinks = [
-    { name: 'Home', path: '/' },
-    { name: 'Get Started', path: '/user-type' },
-    { name: 'About', path: '/about' },
-    { name: 'Contact', path: '/contact' },
-    { name: 'Result', path: '/result' },
-  ];
+  const navLinks = useMemo(() => {
+    const voterId = localStorage.getItem('voterId');
+    const dashboardPath = voterId ? '/voter/dashboard' : '/admin/dashboard';
+
+    return [
+      { name: 'Home', path: '/' },
+      { name: 'Dashboard', path: dashboardPath },
+      { name: 'Get Started', path: '/user-type' },
+      { name: 'About', path: '/about' },
+      { name: 'Contact', path: '/contact' },
+      { name: 'Result', path: '/result' },
+    ];
+  }, [userId]);
 
   return (
     <nav className="w-full px-6 py-4 bg-blue-600 fixed z-50 shadow-md flex items-center justify-between">
@@ -61,14 +65,13 @@ const Navbar = () => {
           </Link>
         ))}
 
-        {/* Profile icon shown only when signed in */}
         {userId && (
           <div className="relative ml-4">
             <div
               onClick={toggleProfilePopup}
               className="cursor-pointer text-white flex items-center space-x-1"
             >
-              <AccountCircleIcon sx={{ color: 'red', fontSize: 36 }} />
+              <AccountCircleIcon sx={{ fontSize: 36 }} />
             </div>
             {showProfilePopup && (
               <div className="absolute right-0 mt-2 w-44 bg-white rounded-lg shadow-lg py-2 z-50">
@@ -118,14 +121,13 @@ const Navbar = () => {
             </Link>
           ))}
 
-          {/* Mobile profile link with popup */}
           {userId && (
             <div className="relative">
               <button
                 className="flex items-center space-x-2 text-xl hover:text-gray-200 transition-colors focus:outline-none"
                 onClick={toggleProfilePopup}
               >
-                <AccountCircleIcon sx={{ color: 'red', fontSize: 36 }} />
+                <AccountCircleIcon sx={{ fontSize: 36 }} />
                 <span>Profile</span>
               </button>
               {showProfilePopup && (

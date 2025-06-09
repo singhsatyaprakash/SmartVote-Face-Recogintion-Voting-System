@@ -36,6 +36,7 @@ import PageNotFound from '../pages/OtherPages/PageNotFound';
 import VoterVerified from '../ProtectWrapper/VoterVerified';
 import Profile from '../pages/OtherPages/Profile';
 import AdminCandidateList from '../pages/AdminPages/AdminCandidateList';
+import AnnounceResult from '../pages/AdminPages/AnnounceResult';
 
 const AppRoutes = () => (
   <Router>
@@ -95,6 +96,12 @@ const AppRoutes = () => (
         </AdminProtectWrapper>
         }
       />
+      <Route path='/admin/announceResult/:electionId' element={
+        <AdminProtectWrapper>
+          <AnnounceResult/>
+        </AdminProtectWrapper>
+      }/>
+
       <Route path='/admin/voter-list' element={
         <AdminProtectWrapper>
           <VotersList/>

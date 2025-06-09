@@ -1,50 +1,120 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
+import axios from 'axios';
+import Navbar from '../../components/Navbar';
 
 const ElectionResult = () => {
-  // Sample data (replace with props or API data in real use)
-  const candidates = [
-    { name: 'Satya Prakash Singh', votes: 230 },
-    { name: 'Deepak', votes: 180 },
-    { name: 'Anjali Bhatt', votes: 120 },
-    { name: 'NOTA', votes: 25 }
-  ];
+  const [results, setResults] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [selectedResult, setSelectedResult] = useState(null);
 
-  const sortedCandidates = [...candidates].sort((a, b) => b.votes - a.votes);
-  const winner = sortedCandidates[0];
-  const totalVotes = candidates.reduce((sum, candidate) => sum + candidate.votes, 0);
-  const notaVotes = candidates.find(c => c.name === 'NOTA')?.votes || 0;
+  useEffect(() => {
+    const fetchResults = async () => {
+      try {
+        const response = await axios.get(`${import.meta.env.VITE_BASE_URL}/result`);
+        setResults(response.data.results || []);
+      } catch (error) {
+        console.error('Error fetching election results:', error);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchResults();
+  }, []);
+
+  if (loading) {
+    return <div className="text-center mt-20 text-lg">Loading election results...</div>;
+  }
 
   return (
-    <div className="min-h-screen bg-gray-100 dark:bg-gray-900 py-12 px-4 flex flex-col items-center">
-      <h1 className="text-4xl font-bold text-green-600 dark:text-green-400 mb-6">
-        🎉 Congratulations {winner.name}! 🎉
-      </h1>
-      <p className="text-lg text-gray-700 dark:text-gray-300 mb-8 text-center">
-        {winner.name} has won the election with <b>{winner.votes}</b> votes!
-      </p>
+    <>
+      <Navbar />
+      <div className="min-h-screen bg-gray-100 pt-28 pb-10 px-4 sm:px-6">
+        <h1 className="text-4xl font-bold text-center text-blue-600 mb-10">
+          🗳️ Election Results
+        </h1>
 
-      <div className="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-md w-full max-w-3xl">
-        <h2 className="text-2xl font-semibold text-center text-blue-600 dark:text-white mb-4">Election Results</h2>
-        
-        <ul className="divide-y divide-gray-300 dark:divide-gray-700">
-          {sortedCandidates.map((candidate, index) => (
-            <li key={index} className="py-3 flex justify-between text-lg text-gray-800 dark:text-gray-200">
-              <span>{candidate.name}</span>
-              <span>{candidate.votes} votes</span>
-            </li>
-          ))}
-        </ul>
+        {selectedResult ? (
+          <div className="w-full max-w-4xl mx-auto bg-white p-8 rounded-lg shadow-lg">
+            <button
+              onClick={() => setSelectedResult(null)}
+              className="mb-4 text-blue-600 hover:text-blue-800 underline"
+            >
+              ← Back to All Results
+            </button>
+            <h2 className="text-2xl font-semibold mb-2">Election Name: {selectedResult.electionName}</h2>
+            <h3 className="text-lg text-gray-600 mb-6">Election ID: {selectedResult.ID}</h3>
 
-        <div className="mt-6 text-gray-700 dark:text-gray-300">
-          <p><b>Total Votes Cast:</b> {totalVotes}</p>
-          <p><b>Total NOTA Votes:</b> {notaVotes}</p>
-        </div>
+            <div className="flex flex-col sm:flex-row items-center gap-4 mb-8">
+              <img
+                src={selectedResult.winner.symbolUrl}
+                alt="Winner Symbol"
+                className="w-20 h-20 object-contain border rounded"
+              />
+              <div className="text-center sm:text-left">
+                <p className="text-xl font-bold text-yellow-600">🏆 {selectedResult.winner.name}</p>
+                <p className="text-sm text-gray-700">{selectedResult.winner.party}</p>
+                <p className="text-sm">Votes: {selectedResult.winner.votes}</p>
+                <p className="text-sm">Winning Difference: {selectedResult.winner.voteDiff}</p>
+              </div>
+            </div>
+
+            <h3 className="text-lg font-semibold mb-4 text-purple-700">📊 Full Candidate Rankings</h3>
+            <ul className="space-y-4">
+              {selectedResult.rankings.map((c) => (
+                <li
+                  key={c.candidateId}
+                  className="border-b pb-3 flex items-center gap-4"
+                >
+                  <img
+                    src={c.symbolUrl}
+                    alt="Symbol"
+                    className="w-10 h-10 object-contain rounded"
+                  />
+                  <div>
+                    <p className="font-semibold">
+                      #{c.rank} - {c.name}
+                    </p>
+                    <p className="text-sm text-gray-600">{c.party}</p>
+                    <p className="text-sm">Votes: {c.votes}</p>
+                  </div>
+                </li>
+              ))}
+            </ul>
+          </div>
+        ) : (
+          <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {results.map((result, index) => (
+              <div
+                key={index}
+                className="bg-white p-6 rounded-lg shadow-md hover:shadow-xl transition duration-300"
+              >
+                <h2 className="text-xl font-bold mb-2">Election Name: {result.electionName}</h2>
+                <h3 className="text-gray-600 mb-4">Election ID: {result.ID}</h3>
+                <div className="flex items-center gap-4">
+                  <img
+                    src={result.winner.symbolUrl}
+                    alt="Winner Symbol"
+                    className="w-14 h-14 object-contain rounded border"
+                  />
+                  <div>
+                    <p className="font-bold text-yellow-600">Winner: {result.winner.name}</p>
+                    <p className="text-sm text-gray-600">{result.winner.party}</p>
+                    <p className="text-sm">Votes: {result.winner.votes}</p>
+                    <p className="text-sm">Winning Difference: {result.winner.voteDiff}</p>
+                  </div>
+                </div>
+                <button
+                  onClick={() => setSelectedResult(result)}
+                  className="mt-4 bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded shadow"
+                >
+                  View Full Details
+                </button>
+              </div>
+            ))}
+          </div>
+        )}
       </div>
-      <div className='text-white text-m p-12 underline'>
-        <Link to='/'>Go to Home</Link>
-      </div>
-    </div>
+    </>
   );
 };
 
