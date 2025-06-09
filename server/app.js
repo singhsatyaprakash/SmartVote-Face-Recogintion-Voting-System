@@ -15,6 +15,7 @@ const adminRouter=require('./routes/admin.route');
 const voterRouter=require('./routes/voter.route');
 
 const electionStatusScheduler=require('./Script/electionStatusScheduler');
+const resultServices=require('./services/result.services');
 
 app.set('view engine', 'ejs');
 // Set custom views folder
@@ -43,11 +44,13 @@ app.use(express.static('public'));
 app.use('/admin',adminRouter);
 app.use('/voter',voterRouter);
 
+
 app.post('/check',(req,res)=>{
     console.log(req.body);
     return res.status(200).json({message:'All ok baby'})
 })
 
+app.get('/result',resultServices.getResultList);
 
 app.listen(process.env.PORT,()=>{
     console.log(`Server is running on port ${process.env.PORT}...`);

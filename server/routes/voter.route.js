@@ -51,4 +51,5 @@ router.post('/register-end', voterRegisterDataValidation, voterController.voterR
         .get('/getdescriptor/:id',voterServices.getdescriptor)
         .post('/store-vote',voterServices.isVoterById,voterController.storeVote)
         .post('/isAlreadyVoted',voterController.isAlreadyVoted)
+        
 module.exports = router;

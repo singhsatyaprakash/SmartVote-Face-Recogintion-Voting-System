@@ -104,3 +104,15 @@ module.exports.stopElection=async(req,res)=>{
         res.status(500).json({message:"Server error ",err});
     }
 }
+module.exports.unblockVotersForElection = async (req, res) => {
+    //console.log("here....")
+  const { electionId } = req.body;
+    //console.log(electionId);
+  try {
+    // Remove votes for this election from all voters
+    await voterModel.updateMany({},{ $pull: { votes: { electionId }}});
+    res.status(200).json({ message: 'All voters unblocked for this election.' });
+  } catch (error) {
+    res.status(500).json({ message: 'Failed to unblock voters.', error });
+  }
+};

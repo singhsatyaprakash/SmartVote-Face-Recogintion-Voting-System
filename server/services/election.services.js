@@ -41,7 +41,7 @@ module.exports.createElection = async (req, res) => {
 module.exports.getCandidate = async (req, res) => {
   try {
     const { electionId } = req.params;
-    const candidates = await candidateModel.find({ electionId }, { _id: 1, name: 1, party: 1, symbolUrl: 1 }).sort({ party: 1 });
+    const candidates = await candidateModel.find({ electionId },{aadhaarNumber:0}).sort({ party: 1 });
     if (!candidates) {
       console.log('No candidates found');
       return res.status(404).json({ message: 'No candidates found' });
@@ -87,3 +87,27 @@ module.exports.getOngoingElection = async (req, res) => {
     res.status(500).json({ error: 'Server error' });
   }
 };
+// module.exports.statusElection=async(req,res)=>{
+//   const {id}=req.params;
+//   try{
+//     const result=await electionModel.findById({_id:id},{status:1});
+//     res.status(200).json({status:result.status});
+//   }
+//   catch(err){
+//     console.log(err);
+//     res.status(404).json({message:"Election not found."});
+//   }
+// }
+module.exports.getElectionDetails = async (req, res) => {
+  const { electionId } = req.params;
+  try {
+    const election = await electionModel.findOne({ _id: electionId });
+    if (!election) {
+      return res.status(404).json({ message: 'Election not found' });
+    }
+    return res.status(200).json({ message: 'Election details fetched successfully', election });
+  } catch (err) {
+    console.log(err);
+    return res.status(500).json({ message: err.message });
+  }
+}

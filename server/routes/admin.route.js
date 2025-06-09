@@ -8,7 +8,7 @@ const {body}=require('express-validator');
 const electionModel=require('../models/election.model');
 const electionServices=require('../services/election.services');
 const adminServices=require('../services/admin.services');
-
+const resultServices=require('../services/result.services')
 
 const verifyAdminData=[
     body('userID').notEmpty().withMessage('Please enter the userId'),
@@ -37,12 +37,17 @@ router.post('/login',verifyAdminData,AuthenticateAdminProfile,adminController.ad
       .get('/voterlist',voterServices.voterList)
       .post('/create-election',electionServices.createElection)
       .get('/electionlist',electionServices.getElectionList)
+      .get('/electionDetails/:electionId',electionServices.getElectionDetails)
       .post('/addCandidate/:electionId',verifyCandidateData,voterServices.isVoter,candidateSevices.addCandidate)
       .get('/getCandidate/:electionId',electionServices.getCandidate)
       .post('/reset-votes', electionServices.resetVotes)
       .post('/start-election',adminController.startElection)
       .delete('/electionlist/:id',adminController.deleteElection)
       .patch('/electionlist/:id/stop',adminController.stopElection)
+      //.get('/election-status/:id',electionServices.statusElection)
+      .post('/unblock-voters', adminController.unblockVotersForElection)
+      .post('/result',resultServices.saveResult)
+      .delete('/delete-results/:electionId',resultServices.deleteResults)
 
 
 module.exports=router;
