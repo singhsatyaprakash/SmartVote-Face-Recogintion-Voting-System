@@ -19,20 +19,12 @@ const resultServices=require('./services/result.services');
 
 app.set('view engine', 'ejs');
 // Set custom views folder
-app.set('views', path.join(__dirname, '../client/src/pages'));
-
 //middlewares...
 app.use(cors({
-    origin:'http://localhost:5173',
+    origin:process.env.CLIENT_URL,
     credentials:true
 })); //at last check out the cors options at time of cookies...
 
-
-// // Handle preflight requests
-// app.options('', cors({
-//     origin: 'http://localhost:5173',
-//     credentials: true
-// }));
 
 app.use(cookieParser());
 app.use(morgan('dev'));//print request, route, responseStatus, timeTaken to send...
