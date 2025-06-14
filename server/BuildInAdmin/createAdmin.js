@@ -32,7 +32,7 @@ const CreateAdmin = async () => {
         });
         //console.log(defaultAdmin)
         await defaultAdmin.save();
-        //console.log("Default admin created successfully:", defaultAdmin);
+        console.log("Default admin created successfully:", defaultAdmin);
     } catch (error) {
         // console.log(error);
        console.log("Failed to create admin:", error.errmsg);

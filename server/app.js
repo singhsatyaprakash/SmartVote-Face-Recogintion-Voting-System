@@ -14,6 +14,8 @@ connectDB();
 const adminRouter=require('./routes/admin.route');
 const voterRouter=require('./routes/voter.route');
 
+
+
 const electionStatusScheduler=require('./Script/electionStatusScheduler');
 const resultServices=require('./services/result.services');
 
@@ -30,6 +32,7 @@ app.use(cookieParser());
 app.use(morgan('dev'));//print request, route, responseStatus, timeTaken to send...
 app.use(express.json());
 app.use(express.urlencoded({extended:true}));
+app.use(express.static(path.join(__dirname, '../client/dist')));
 app.use(express.static('public'));
 
 
@@ -43,6 +46,11 @@ app.post('/check',(req,res)=>{
 })
 
 app.get('/result',resultServices.getResultList);
+
+// Handle all other routes with index.html (for React Router)
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, '../client/dist/index.html'));
+});
 
 app.listen(process.env.PORT,()=>{
     console.log(`Server is running on port ${process.env.PORT}...`);
