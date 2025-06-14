@@ -32,6 +32,7 @@ app.use(cookieParser());
 app.use(morgan('dev'));//print request, route, responseStatus, timeTaken to send...
 app.use(express.json());
 app.use(express.urlencoded({extended:true}));
+
 app.use(express.static(path.join(__dirname, '../client/dist')));
 app.use(express.static('public'));
 
@@ -39,11 +40,6 @@ app.use(express.static('public'));
 app.use('/admin',adminRouter);
 app.use('/voter',voterRouter);
 
-
-app.post('/check',(req,res)=>{
-    console.log(req.body);
-    return res.status(200).json({message:'All ok baby'})
-})
 
 app.get('/result',resultServices.getResultList);
 
