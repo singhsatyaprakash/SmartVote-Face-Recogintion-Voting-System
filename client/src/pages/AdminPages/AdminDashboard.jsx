@@ -133,7 +133,7 @@ const AdminDashboard = () => {
           </div>
         </div>
 
-        {/* Manage Complaints */}
+        {/* Manage Complaints
         <div className="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-lg hover:shadow-2xl transition">
           <div className="flex flex-col items-center">
             <BugReportIcon className="text-red-500 mb-4" style={{ fontSize: 60 }} />
@@ -147,7 +147,7 @@ const AdminDashboard = () => {
               </button>
             </Link>
           </div>
-        </div>
+        </div> */}
       </div>
     </div>
     </>
